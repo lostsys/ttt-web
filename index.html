@@ -1,358 +1,1471 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-    <meta property="og:image" content="images/default.jpg" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.tendertouchdetailing.com" />
-    <meta property="og:title" content="Mobile Auto Detailing - Richmond VA" />
-    <meta property="og:description" content="Richmond's best value in mobile auto detailing, we come to you! We do it all, from carpet restoration, exterior waxing, clay bar treatment, and much more! Schedule online today on our website!" /> 
-    <title>A Tender Touch Mobile Auto Detailing</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Tender Touch Mobile Detailing | Richmond, VA</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blue-dark: #00204a;
+      --blue-mid: #003876;
+      --accent: #f59e0b;
+      --accent-hover: #d97706;
+      --light-bg: #f8f9fb;
+    }
 
-    <script src="https://js.stripe.com/v3/"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Oswald:wght@200;300;400;500;700&display=swap" rel="stylesheet">
-    <link href="styles/style.css" type="text/css" rel="stylesheet">
-    <link href='styles/client.css' type='text/css' rel='stylesheet'>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    <style>
-        /* width */
-        ::-webkit-scrollbar {
-          width: 10px;
-        }
-        
-        /* Track */
-        ::-webkit-scrollbar-track {
-          background: #f1f1f1; 
-        }
-         
-        /* Handle */
-        ::-webkit-scrollbar-thumb {
-          background: #858585; 
-        }
-        
-        /* Handle on hover */
-        ::-webkit-scrollbar-thumb:hover {
-          background: #525252; 
-        }
-    </style>
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-B89QJ17YCQ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    html { scroll-behavior: smooth; }
 
-  gtag('config', 'G-B89QJ17YCQ');
-</script>
+    body {
+      font-family: 'Lato', sans-serif;
+      color: #333;
+      background: #fff;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5 {
+      font-family: 'Oswald', sans-serif;
+      letter-spacing: 0.04em;
+    }
+
+    /* ─── NAV ─── */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 999;
+      transition: background 0.35s, box-shadow 0.35s, padding 0.35s;
+      padding: 1.4rem 2rem;
+    }
+    #navbar.scrolled {
+      background: var(--blue-dark);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.4);
+      padding: 0.75rem 2rem;
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      text-decoration: none;
+      line-height: 1.2;
+    }
+    .nav-logo span {
+      display: block;
+      font-size: 0.65rem;
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      color: var(--accent);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      list-style: none;
+    }
+    .nav-links a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta {
+      background: var(--accent);
+      color: #fff !important;
+      padding: 0.5rem 1.4rem;
+      border-radius: 4px;
+      font-weight: 500 !important;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--accent-hover) !important; color: #fff !important; }
+
+    /* Mobile nav toggle */
+    #nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    #nav-toggle span {
+      display: block;
+      width: 26px;
+      height: 2px;
+      background: #fff;
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    #mobile-menu {
+      display: none;
+      flex-direction: column;
+      background: var(--blue-dark);
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 998;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+    }
+    #mobile-menu.open { display: flex; }
+    #mobile-menu a {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    #mobile-menu a:hover { color: var(--accent); }
+    #mobile-close {
+      position: absolute;
+      top: 1.5rem; right: 1.5rem;
+      font-size: 2rem;
+      color: #fff;
+      cursor: pointer;
+      font-weight: 300;
+      line-height: 1;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      #nav-toggle { display: flex; }
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      background: var(--blue-dark);
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to bottom, rgba(0,20,50,0.72) 0%, rgba(0,10,30,0.80) 100%),
+        url('https://images.unsplash.com/photo-1507136566006-cfc505b114fc?w=1800&auto=format&fit=crop&q=80');
+      background-size: cover;
+      background-position: center;
+      will-change: transform;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 0.35rem 1.1rem;
+      border-radius: 100px;
+      margin-bottom: 1.4rem;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 1.5rem;
+      max-width: 860px;
+    }
+    .hero-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.05;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+    .hero-title em {
+      font-style: normal;
+      color: var(--accent);
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 2.2vw, 1.2rem);
+      font-weight: 300;
+      color: rgba(255,255,255,0.82);
+      max-width: 580px;
+      margin: 0 auto 2.2rem;
+      line-height: 1.75;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.85rem 2.2rem;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(245,158,11,0.35);
+    }
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(245,158,11,0.45);
+    }
+    .btn-outline {
+      background: transparent;
+      color: #fff;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.85rem 2.2rem;
+      border-radius: 5px;
+      border: 2px solid rgba(255,255,255,0.55);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      animation: bob 2s ease-in-out infinite;
+    }
+    .hero-scroll svg { width: 22px; height: 22px; stroke: rgba(255,255,255,0.5); }
+    @keyframes bob {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ─── TRUST BAR ─── */
+    .trust-bar {
+      background: var(--blue-dark);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: rgba(255,255,255,0.78);
+      font-size: 0.85rem;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+    }
+    .trust-item svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; flex-shrink: 0; }
+
+    /* ─── SECTION SHARED ─── */
+    .section-label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+    .section-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 600;
+      color: var(--blue-dark);
+      text-transform: uppercase;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+    .section-title.light { color: #fff; }
+    .section-desc {
+      font-size: 1rem;
+      font-weight: 300;
+      color: #666;
+      line-height: 1.8;
+      max-width: 580px;
+    }
+    .section-desc.light { color: rgba(255,255,255,0.75); }
+    .divider {
+      width: 50px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 1.2rem;
+    }
+
+    /* ─── HOW IT WORKS ─── */
+    #how-it-works {
+      background: var(--light-bg);
+      padding: 6rem 2rem;
+    }
+    .steps-grid {
+      max-width: 1100px;
+      margin: 3rem auto 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+    }
+    .step-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .step-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    }
+    .step-number {
+      position: absolute;
+      top: 1.2rem; right: 1.4rem;
+      font-family: 'Oswald', sans-serif;
+      font-size: 4rem;
+      font-weight: 700;
+      color: rgba(0,32,74,0.06);
+      line-height: 1;
+    }
+    .step-icon {
+      width: 52px; height: 52px;
+      background: rgba(245,158,11,0.12);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.2rem;
+    }
+    .step-icon svg { width: 26px; height: 26px; stroke: var(--accent); fill: none; }
+    .step-card h4 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--blue-dark);
+      text-transform: uppercase;
+      margin-bottom: 0.7rem;
+    }
+    .step-card p {
+      font-size: 0.92rem;
+      color: #666;
+      line-height: 1.75;
+    }
+
+    /* ─── SERVICES ─── */
+    #services {
+      background: var(--blue-dark);
+      padding: 6rem 2rem;
+    }
+    .services-header {
+      max-width: 1100px;
+      margin: 0 auto 3rem;
+      text-align: center;
+    }
+    .services-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .service-card {
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 4/3;
+      cursor: pointer;
+    }
+    .service-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+    .service-card:hover img { transform: scale(1.07); }
+    .service-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,20,50,0.88) 0%, rgba(0,20,50,0.2) 60%, transparent 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.5rem;
+      transition: background 0.3s;
+    }
+    .service-card:hover .service-overlay {
+      background: linear-gradient(to top, rgba(0,20,50,0.95) 0%, rgba(0,20,50,0.5) 60%, transparent 100%);
+    }
+    .service-tag {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.3rem;
+    }
+    .service-card h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #fff;
+      text-transform: uppercase;
+      line-height: 1.2;
+      margin-bottom: 0.4rem;
+    }
+    .service-desc {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.5;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s;
+    }
+    .service-card:hover .service-desc { max-height: 80px; }
+
+    /* ─── PACKAGES ─── */
+    #packages {
+      background: var(--light-bg);
+      padding: 6rem 2rem;
+    }
+    .packages-header {
+      max-width: 1100px;
+      margin: 0 auto 3rem;
+      text-align: center;
+    }
+    .packages-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.8rem;
+    }
+    .pkg-card {
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.07);
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+    .pkg-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 14px 45px rgba(0,0,0,0.12);
+    }
+    .pkg-card.featured {
+      border: 2px solid var(--accent);
+      transform: scale(1.03);
+      box-shadow: 0 8px 40px rgba(245,158,11,0.25);
+    }
+    .pkg-card.featured:hover {
+      transform: scale(1.03) translateY(-4px);
+    }
+    .pkg-header {
+      background: var(--blue-dark);
+      padding: 1.8rem 1.6rem 1.4rem;
+      position: relative;
+    }
+    .pkg-card.featured .pkg-header {
+      background: linear-gradient(135deg, var(--blue-dark), #004a9f);
+    }
+    .pkg-badge {
+      position: absolute;
+      top: -1px; right: 1.2rem;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.75rem;
+      border-radius: 0 0 6px 6px;
+    }
+    .pkg-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #fff;
+      text-transform: uppercase;
+      margin-bottom: 0.2rem;
+    }
+    .pkg-tagline {
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.05em;
+    }
+    .pkg-price-row {
+      margin-top: 1rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.3rem;
+    }
+    .pkg-from {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .pkg-price {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .pkg-price-sub {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.5);
+    }
+    .pkg-body {
+      padding: 1.6rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .pkg-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      flex: 1;
+    }
+    .pkg-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.88rem;
+      color: #555;
+      line-height: 1.4;
+    }
+    .pkg-features li svg {
+      width: 16px; height: 16px;
+      stroke: #22c55e;
+      fill: none;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .pkg-book-btn {
+      display: block;
+      margin-top: 1.4rem;
+      background: var(--blue-dark);
+      color: #fff;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .pkg-card.featured .pkg-book-btn {
+      background: var(--accent);
+    }
+    .pkg-book-btn:hover { background: var(--accent); }
+    .pkg-card.featured .pkg-book-btn:hover { background: var(--accent-hover); }
+    .pkg-sizes {
+      display: flex;
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .pkg-size-tag {
+      font-size: 0.7rem;
+      background: rgba(245,158,11,0.1);
+      color: var(--accent-hover);
+      border-radius: 4px;
+      padding: 0.15rem 0.5rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* ─── BOOKING SECTION ─── */
+    #booking {
+      background: #fff;
+      padding: 6rem 2rem;
+    }
+    .booking-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    @media (max-width: 860px) {
+      .booking-inner { grid-template-columns: 1fr; gap: 2rem; }
+    }
+    .booking-info h2 { margin-bottom: 1rem; }
+    .booking-info .section-desc { margin-bottom: 1.5rem; }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 0.9rem;
+      font-size: 0.95rem;
+      color: #444;
+    }
+    .contact-item svg {
+      width: 20px; height: 20px;
+      stroke: var(--accent);
+      fill: none;
+      flex-shrink: 0;
+    }
+    .contact-item a {
+      color: var(--blue-dark);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .contact-item a:hover { color: var(--accent); }
+    .booking-hours {
+      margin-top: 1.5rem;
+      background: var(--light-bg);
+      border-radius: 10px;
+      padding: 1.2rem 1.4rem;
+    }
+    .booking-hours h4 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--blue-dark);
+      margin-bottom: 0.8rem;
+    }
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      color: #555;
+      padding: 0.3rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-open { color: #16a34a; font-weight: 500; }
+    .hours-closed { color: #dc2626; font-weight: 500; }
+    .booking-embed {
+      background: #f8f9fb;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+      min-height: 520px;
+    }
+    .booking-embed iframe {
+      width: 100%;
+      min-height: 520px;
+      border: none;
+      display: block;
+    }
+
+    /* ─── TESTIMONIALS ─── */
+    #testimonials {
+      background: var(--blue-dark);
+      padding: 6rem 2rem;
+    }
+    .testimonials-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .testimonials-header { text-align: center; margin-bottom: 3rem; }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .review-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 1.8rem;
+      transition: background 0.3s;
+    }
+    .review-card:hover { background: rgba(255,255,255,0.08); }
+    .review-stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 1rem;
+    }
+    .review-stars svg {
+      width: 16px; height: 16px;
+      fill: var(--accent);
+      stroke: var(--accent);
+    }
+    .review-text {
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.75;
+      margin-bottom: 1.2rem;
+      font-style: italic;
+    }
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .review-avatar {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #f97316);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .review-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .review-platform {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.04em;
+    }
+
+    /* ─── FAQ ─── */
+    #faq {
+      background: var(--light-bg);
+      padding: 6rem 2rem;
+    }
+    .faq-inner {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+    .faq-header { text-align: center; margin-bottom: 3rem; }
+    .faq-item {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.05);
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 1.2rem 1.5rem;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--blue-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      transition: color 0.2s;
+    }
+    .faq-question:hover { color: var(--accent); }
+    .faq-question svg {
+      width: 18px; height: 18px;
+      stroke: currentColor;
+      fill: none;
+      flex-shrink: 0;
+      transition: transform 0.3s;
+    }
+    .faq-item.open .faq-question svg { transform: rotate(45deg); }
+    .faq-item.open .faq-question { color: var(--accent); }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s;
+      font-size: 0.92rem;
+      color: #666;
+      line-height: 1.75;
+    }
+    .faq-answer-inner {
+      padding: 0 1.5rem 1.2rem;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #000f22;
+      padding: 4rem 2rem 2rem;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 3rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 2rem;
+    }
+    @media (max-width: 700px) {
+      .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+    }
+    .footer-brand .nav-logo { font-size: 1.2rem; display: inline-block; margin-bottom: 0.9rem; }
+    .footer-brand p {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.7;
+    }
+    .footer-col h4 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 0.6rem; }
+    .footer-col ul a {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-col ul a:hover { color: #fff; }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .footer-bottom p {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.3);
+    }
+    .social-links {
+      display: flex;
+      gap: 1rem;
+    }
+    .social-links a {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .social-links a:hover { background: var(--accent); border-color: var(--accent); }
+    .social-links svg { width: 15px; height: 15px; stroke: rgba(255,255,255,0.6); fill: none; }
+    .social-links a:hover svg { stroke: #fff; }
+
+    /* ─── ANIMATIONS ─── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* staggered children */
+    .stagger > * { transition-delay: 0s; }
+    .stagger > *:nth-child(1) { transition-delay: 0.05s; }
+    .stagger > *:nth-child(2) { transition-delay: 0.15s; }
+    .stagger > *:nth-child(3) { transition-delay: 0.25s; }
+    .stagger > *:nth-child(4) { transition-delay: 0.35s; }
+    .stagger > *:nth-child(5) { transition-delay: 0.45s; }
+    .stagger > *:nth-child(6) { transition-delay: 0.55s; }
+
+    /* Sticky phone bar on mobile */
+    .mobile-sticky {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 990;
+      background: var(--blue-dark);
+      padding: 0.9rem 1.5rem;
+      flex-direction: row;
+      gap: 0.8rem;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+    }
+    .mobile-sticky a {
+      flex: 1;
+      text-align: center;
+      padding: 0.7rem;
+      border-radius: 6px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .mobile-sticky .ms-call {
+      background: var(--accent);
+      color: #fff;
+    }
+    .mobile-sticky .ms-book {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+    @media (max-width: 640px) {
+      .mobile-sticky { display: flex; }
+      body { padding-bottom: 4.5rem; }
+    }
+  </style>
 </head>
 <body>
-<div class="navi-btn">
-    &#8801;
-</div>
-<div class="navi-exit">
-    &#8801;
-</div>
-<!----- NAVIGATION -------->
-<div class="navi-box">
-    <ul class="navi-list">
-        <li class="navi-item">
-            <a href="#" class="navi-link tracking-in-contract-bck" id="home-link">Home</a>
-        </li>
-        <li class="navi-item">
-            <a href="#info-link" class="navi-link tracking-in-contract-bck">How it Works</a>
-        </li>
-        <li class="navi-item">
-            <a href="#start-scheduling" class="navi-link tracking-in-contract-bck">Packages</a>
-        </li>
-        <li class="navi-item">
-            <a href="#start-scheduling" class="navi-link tracking-in-contract-bck">Schedule Now</a>
-        </li>
-        <li class="navi-item">
-            <a href="#gallery" class="navi-link tracking-in-contract-bck">Gallery</a>
-        </li>
-        <li class="navi-item">
-            <a href="#contact" class="navi-link tracking-in-contract-bck">Contact</a>
-        </li>
-    </ul>
-</div>
 
-<div class="phone-box bounce-in-top">
-    <p class="phone-word">Questions?</p>
-    <a href="tel:804-324-6388" alt="Call us at 804-324-6388" class="phone-link"><span class="phone-char">(</span>80<span class="phone-char">4)</span> 32<span class="phone-char">4 -</span> 6388</a>
-</div>
-<section class="home-page">
-<header class="header">
-    <!----- COVID 19 UPDATE POPUP ------>
-    <div class="covid-btn">
-        <p class="covid-btn-text">Covid-19 Update</p>
+  <!-- ══════════════ NAVBAR ══════════════ -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        tendertouch
+        <span>Mobile Detailing · Richmond, VA</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="#booking" class="nav-cta">Book Now</a></li>
+      </ul>
+      <div id="nav-toggle" onclick="openMobileMenu()" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </div>
     </div>
-    <div class="covid-box">
-        <div class="covid-exit-box">
-            +
+  </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div id="mobile-menu">
+    <div id="mobile-close" onclick="closeMobileMenu()">&#x2715;</div>
+    <a href="#how-it-works" onclick="closeMobileMenu()">How It Works</a>
+    <a href="#services" onclick="closeMobileMenu()">Services</a>
+    <a href="#packages" onclick="closeMobileMenu()">Packages</a>
+    <a href="#testimonials" onclick="closeMobileMenu()">Reviews</a>
+    <a href="#booking" onclick="closeMobileMenu()" style="color: var(--accent);">Book Now</a>
+  </div>
+
+  <!-- ══════════════ HERO ══════════════ -->
+  <section id="hero">
+    <div class="hero-bg" id="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-badge">&#9733; 5+ Years of experience</div>
+      <h1 class="hero-title">
+        Richmond's<br><em>Best detailing</em>
+      </h1>
+      <p class="hero-sub">
+        Professional mobile auto detailing brought directly to your driveway, office, or anywhere in the Richmond, Henrico,
+Mechanicsville, and Chesterfield area.
+      </p>
+      <div class="hero-buttons">
+        <a href="#booking" class="btn-primary">Book an Appointment</a>
+        <a href="tel:8043246388" class="btn-outline">&#128222; Call Us</a>
+      </div>
+    </div>
+    <div class="hero-scroll" onclick="document.getElementById('how-it-works').scrollIntoView({behavior:'smooth'})">
+      <svg viewBox="0 0 24 24" stroke-width="1.5" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 5v14M5 12l7 7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ══════════════ TRUST BAR ══════════════ -->
+  <div class="trust-bar">
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Very Professional</span>
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>We Come to Your Location</span>
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Easy Online Scheduling</span>
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>5-Star Rated Service</span>
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Transparent Pricing</span>
+    </div>
+  </div>
+
+  <!-- ══════════════ HOW IT WORKS ══════════════ -->
+  <section id="how-it-works">
+    <div style="max-width:1100px; margin:0 auto; text-align:center;" class="fade-up">
+      <p class="section-label">Simple Process</p>
+      <div class="divider" style="margin:0 auto 1rem;"></div>
+      <h2 class="section-title">Easy Online Scheduling</h2>
+      <p class="section-desc" style="margin:0 auto;">Getting your car detailed has never been easier. Follow three simple steps and we'll handle the rest — all at your location.</p>
+    </div>
+    <div class="steps-grid stagger">
+      <div class="step-card fade-up">
+        <div class="step-number">01</div>
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
-        <h5 class="covid-title">Our Covid-19 Policies</h5>
-        <p class="covid-text">
-            We understand these challenging times require new and unique solutions
-            to continue offering quality service. Our goal and absolute standard is
-            to assure all of our customers and employees are safe 100% of the time
-            while providing the excellent service your used to. The following outlines
-            our Corona-virus related policies:
-        </p>
-        <ul class="covid-list">
-            <li class="covid-item">
-                All of our employees wear masks, gloves, and boot coverings
-                while in contact with your vehicle.
-            </li>
-            <li class="covid-item">
-                Vehicle is sprayed with a fogging system with a disinfectant
-                to ensure surface bacteria is eliminated upon completion of service.
-            </li>
-            <li>
-                Employees are required to be tested periodically to ensure the safety
-                of our customers.
-            </li>
-        </ul>
-    </div>
-    <div class="logo-box">
-        <img src="images/ttLogo1.png" alt="A Tender Touch Auto Detailing Logo" class="logo">
-    </div>
-    <div class="heading-box">
-        <h1 class="primary-heading">
-            <span class="primary-heading-top tracking-in-contract-bck">
-                Richmond's
-            </span>
-            <span class="primary-heading-top tracking-in-contract-bck">
-                Quality
-            </span>
-            <span class="primary-heading-top tracking-in-contract-bck">
-                Affordable
-            </span>
-            <span class="primary-heading-bottom">
-                Tender Touch Mobile <span class='headerBlock'>Auto Detailing Service</span>
-            </span>
-            
-        </h1>
-    </div>
-
-    <div class="primary-btn-box">
-        <a href="#start-scheduling" class="btn btn-orange main-btn">Schedule Service</a>
-    </div>
-
-    <div class="subheading-box">
-        <h2 class="subheading">
-            <span class="subheading-top">
-                Serving the Richmond, Henrico
-            </span>
-            <span class="subheading-bottom">
-                Mechanicsville, and Chesterfield Region
-            </span>
-        </h2>
-    </div>
-
-</header>
-
-
-<div class="info-title-box" id='info-link'>
-    <h3>Easy Online Scheduling</h3>
-</div>
-
-<section class="info-page">
-    <div class="customer-steps">
-        <img src="images/size.svg" alt="Choose the size of your vehicle" class="svg">
         <h4>Choose a Package</h4>
-        <p>
-            All of our packages include a base price that is determined by
-            the size of your vehicle. We categorize size into three divisions:
-            <em>Cars</em>, <em>Trucks</em>, and <em>SUV's/Vans</em>.
-        </p>
-    </div>
-    <div class="customer-steps">
-        <img src="images/car.svg" alt="Choose the size of your vehicle" class="svg">
+        <p>All of our packages include a base price determined by the size of your vehicle — Cars, Trucks, and SUV's/Vans. Pick what fits your needs best.</p>
+      </div>
+      <div class="step-card fade-up">
+        <div class="step-number">02</div>
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
         <h4>Add Upgrades</h4>
-        <p>
-           No job is too big or small for <em>A Tender Touch Mobile Detailing</em>! We have
-            options for exterior washes, interior cleaning, carpet scrubbing, engine
-            cleanup, and more.
-        </p>
-    </div>
-    <div class="customer-steps">
-        <img src="images/time.svg" alt="Pay Online and enjoy your soon to be clean car!" class="svg">
+        <p>No job is too big or small! Add exterior washes, interior cleaning, carpet scrubbing, engine cleanup, and more to customize your service.</p>
+      </div>
+      <div class="step-card fade-up">
+        <div class="step-number">03</div>
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
         <h4>Pick the Time</h4>
-        <p>
-            You can pick a time slot using our easy online scheduling system, or
-            alternatively, you can give us a phone call to schedule an appointment
-            during our business hours from 9:00 AM to 3:00 PM.
-        </p>
+        <p>Use our easy online scheduling system to pick your slot, or call us during business hours. We come to you!</p>
+      </div>
     </div>
-</section>
+  </section>
 
-<section class="package-page">
-    <div class="package-container">
-    <div class="row">
-        <h4 class="package-title" id='start-scheduling'>Package Details</h4>
+  <!-- ══════════════ SERVICES ══════════════ -->
+  <section id="services">
+    <div class="services-header fade-up">
+      <p class="section-label" style="color:var(--accent);">What We Offer</p>
+      <div class="divider" style="margin:0 auto 1rem;"></div>
+      <h2 class="section-title light">Our Detailing Services</h2>
+      <p class="section-desc light" style="margin:0 auto;">From a quick exterior wash to a full interior overhaul, we have the perfect service for every vehicle and every budget.</p>
     </div>
-    <div class="row">
-        <p class="package-instruction">
-            (Click an option)
+    <div class="services-grid stagger" style="margin-top:3rem;">
+
+      <div class="service-card fade-up">
+        <img src="https://images.unsplash.com/photo-1601362840469-51e4d8d58785?w=800&auto=format&fit=crop&q=80" alt="Exterior Detailing" loading="lazy" />
+        <div class="service-overlay">
+          <p class="service-tag">Most Popular</p>
+          <h3>Exterior Detailing</h3>
+          <p class="service-desc">Hand wash, clay bar treatment, wax & polish to make your paint shine like new.</p>
+        </div>
+      </div>
+
+      <div class="service-card fade-up">
+        <img src="https://images.unsplash.com/photo-1771491237225-01931a752f58?w=800&auto=format&fit=crop&q=80" alt="Interior Detailing" loading="lazy" />
+        <div class="service-overlay">
+          <p class="service-tag">Deep Clean</p>
+          <h3>Interior Detailing</h3>
+          <p class="service-desc">Vacuuming, shampooing, steam cleaning, leather conditioning, and odor elimination.</p>
+        </div>
+      </div>
+
+      <div class="service-card fade-up">
+        <img src="https://images.unsplash.com/photo-1607860108855-64acf2078ed9?w=800&auto=format&fit=crop&q=80" alt="Full Detail" loading="lazy" />
+        <div class="service-overlay">
+          <p class="service-tag">Best Value</p>
+          <h3>Full Detail Package</h3>
+          <p class="service-desc">Complete inside-and-out transformation. The ultimate care for your vehicle.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════ BOOKING ══════════════ -->
+  <section id="booking">
+    <div class="booking-inner">
+      <div class="booking-info fade-up">
+        <p class="section-label">Schedule Today</p>
+        <div class="divider"></div>
+        <h2 class="section-title">Book Your Appointment</h2>
+        <p class="section-desc">Ready to get your vehicle looking its best? Use our online scheduler to pick your package, add upgrades, and choose a time that works for you.</p>
+
+        <div style="margin-top:1.8rem;">
+          <div class="contact-item">
+            <svg viewBox="0 0 24 24" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Call or text: <a href="tel:8043246388">(804) 324-6388</a></span>
+          </div>
+          <div class="contact-item">
+            <svg viewBox="0 0 24 24" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Serving Richmond, VA &amp; surrounding areas</span>
+          </div>
+          <div class="contact-item">
+            <svg viewBox="0 0 24 24" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>We respond quickly — usually within the hour</span>
+          </div>
+        </div>
+
+        <div class="booking-hours">
+          <h4>&#128337; Business Hours</h4>
+          <div class="hours-row">
+            <span>Monday – Friday</span>
+            <span class="hours-open">9:00 AM – 5:00 PM</span>
+          </div>
+          <div class="hours-row">
+            <span>Saturday</span>
+            <span class="hours-open">9:00 AM – 5:00 PM</span>
+          </div>
+          <div class="hours-row">
+            <span>Sunday</span>
+            <span class="hours-closed">Calls Only</span>
+          </div>
+        </div>
+
+        <p style="margin-top:1.2rem;font-size:0.82rem;color:#999;line-height:1.6;">
+          Appointments can also be scheduled via phone call during business hours. Online booking is available 24/7.
         </p>
-        <p class="package-instruction">
-            <b>Payment due at time of service, Cash and all major Credit Cards Accepted</b><br />
-            <em>*Discounts available for multiple vehicles, please call at <a href="tel:804-324-6388" alt="Call us at 804-324-6388" class="phone-packages">(804) 324-6388</a></em>
-        </p>
-        <p class="package-instruction">
-            <a href="https://squareup.com/gift/ML2M5NPXJ23QP/order" target="_blank">Gift Cards Now Available!</a>
-        </p>
-        <p class="package-instruction">
-            <img alt="Credit Cards Accepted" title="Credit Cards Accepted" src="https://www.credit-card-logos.com/images/multiple_credit-card-logos-1/credit_card_logos_17.gif" width="235" height="35" border="0" /></a>
-        </p>
-		<!--<p class="package-instruction">
-            <b>Our automated appointment </b><br />
-			<b>system is down, look for </b><br />
-			<b>what you need below then call </b><br />
-            <b>our number for appointments. <a href="tel:804-324-6388" alt="Call us at 804-324-6388" class="phone-packages">(804) 324-6388</a></b> 
-        <div class="row">
-            <div class="package-buttons">
-                <a href="#package-details"><button class="package-choice interior" id='package-1'>
-                    Fleet Washing
-                </button></a>
-                <a href="#package-details"><button class="package-choice interior" id='package-2'>
-                    Exterior Detail
-                </button></a>
-                <a href="#package-details"><button class="package-choice interior" id='package-3'>
-                    Interior Detail
-                </button></a>
-                <a href="#package-details"><button class="package-choice exterior" id='package-4'>
-                    Full Detail
-                </button></a> -->
-				<div><script src='https://square.site/appointments/buyer/widget/iosz73dap2y2yq/LQ7JPPTZDYX2A.js'></script></div>
-                <!--
-				
+      </div>
+
+      <div class="booking-embed fade-up">
+        <iframe
+          src="https://app.squareup.com/appointments/buyer/widget/iosz73dap2y2yq/LQ7JPPTZDYX2A"
+          title="Book an Appointment — A Tender Touch Mobile Detailing"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ TESTIMONIALS ══════════════ -->
+  <section id="testimonials">
+    <div class="testimonials-inner">
+      <div class="testimonials-header fade-up">
+        <p class="section-label" style="color:var(--accent);">What Clients Say</p>
+        <div class="divider" style="margin:0 auto 1rem;"></div>
+        <h2 class="section-title light">5-Star Reviews</h2>
+        <p class="section-desc light" style="margin:0 auto;">Don't just take our word for it — here's what our Richmond customers have to say about A Tender Touch Mobile Detailing.</p>
+      </div>
+      <div class="reviews-grid stagger" style="margin-top:3rem;">
+
+        <div class="review-card fade-up">
+          <div class="review-stars">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+          </div>
+          <p class="review-text">"If I could give them 6 stars, I would. -- The car looks beautiful inside and out. The interior is clean and smells fresh and the exterior is spotless."</p>
+          <div class="review-author">
+            <div class="review-avatar">JC</div>
+            <div>
+              <p class="review-name">Josiah C.</p>
+              <p class="review-platform">Google Review &#x2022; Richmond, VA</p>
             </div>
+          </div>
         </div>
 
-        <h5 class="package-name"></h5>
-        <h5 class="package-price"></h5>
-        
-        <div class="package-content">
-            <!--- UPDATES WITH PACKAGE DETAILS ----
-            <ul class="package-text" id="package-details">
-            </ul>
-        </div>
-    </div>
-    </div>
-    
-</section>
-
-
-    
-    <div class='_client'>
-        <div class='_container' id='customer-schedule'></div>
-        
-        <div class='_apptContainer'></div>
-    </div>
-
-    <div class='_orderContainer' id='orderFormLink'>
-
-    </div>
-
-    <div class='_paymentContainer' id='stripePaymentForm'>
-
-    </div>
-
-    <div class='_orderConfirmation'>
-
-    </div> -->
-
-    
-</section>
-
-<section class='contact'>
-
-    <div class="contact-container" id='contact'>
-
-        <h3 class='contact-header'>Contact Us For Questions About Reservations </h3>
-        <p class='contact-phone'>Phone: <a href="tel:804-324-6388" alt="Call us at 804-324-6388" class="phone-packages">(804) 324 - 6388</a></p>
-        <p class='contact-phone'>Email: <a href="mailto: aTenderTouchDetailing@gmail.com" alt="Send us an email at aTenderTouchDetailing@gmail.com" class="phone-packages">aTenderTouchDetailing@gmail.com</a></p>
-        <p class='contact-phone contact-spacer'>Business Hours: 
-            <ul class='contact-ul'>
-                <li class='contact-li'>Sunday: 9 AM - 3 PM (Calls Only)</li>
-                <li class='contact-li'>Monday: 9 AM - 3 PM</li>
-                <li class='contact-li'>Tuesday: 9 AM - 3 PM</li>
-                <li class='contact-li'>Wednesday: 9 AM - 3 PM</li>
-                <li class='contact-li'>Thursday: 9 AM - 3 PM (Calls Only)</li>
-                <li class='contact-li'>Friday: 9 AM - 3 PM</li>
-                <li class='contact-li'>Saturday: 9 AM - 3 PM</li>
-            </ul>
-        </p>
-
-    </div>
-
-</section>
-
-<section class='work-gallery'>
-
-    <div class="gallery-container">
-        
-        <h3 class='gallery-header' id='gallery'>Check Out Our Work</h3>
-
-        <div class='gallery-img-container'>
-
-            <!-- INSERT IMAGES -->
-            <button class='load-images'>Click Here to See Images</button>
-
-        </div>
-
-    </div>
-
-</section>
-
-<footer id='footer'>
-    <div class='footer-container'>
-
-        <div class="social-media">
-            <div class="social-media-link">
-                <a href='#'><span class='helper'></span><img src='images/twitter.png' alt='twitter link'></a>
+        <div class="review-card fade-up">
+          <div class="review-stars">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+          </div>
+          <p class="review-text">"Tom and his crew really did an outstanding job on my car. I called a few other places before I found A Tender Touch Mobile Detailing online, and could not believe the level of professionalism and kindness that Tom showed me even on the phone. --"</p>
+          <div class="review-author">
+            <div class="review-avatar">SD</div>
+            <div>
+              <p class="review-name">Sarah D.</p>
+              <p class="review-platform">Google Review &#x2022; Richmond, VA</p>
             </div>
-            <div class="social-media-link">
-                <a href='https://www.facebook.com/tendertouchmobiledetailing/' target="_blank"><span class='helper'></span><img src='images/fb.png' alt='instagram link'></a>
+          </div>
+        </div>
+
+        <div class="review-card fade-up">
+          <div class="review-stars">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+          </div>
+          <p class="review-text">"A+++++ service. I had them clean 2 of my vehicles (SUV and pickup truck) and they both look brand new!! Inside and out. They will not disappoint!! They were professional, on time, quick, just everything you could want."</p>
+          <div class="review-author">
+            <div class="review-avatar">J</div>
+            <div>
+              <p class="review-name">Janet</p>
+              <p class="review-platform">Google Review &#x2022; Richmond, VA</p>
             </div>
-            <div class="social-media-link">
-                <a href='#'><span class='helper'></span><img src='images/ig.png' alt='facebook link'></a>
+          </div>
+        </div>
+
+        <div class="review-card fade-up">
+          <div class="review-stars">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+          </div>
+          <p class="review-text">"Absolutly amazing job, fast, professional and a great attitude. They even warned me of rain and suggested a different date. Just a great team! Would recommend!"</p>
+          <div class="review-author">
+            <div class="review-avatar">HD</div>
+            <div>
+              <p class="review-name">Hunter D.</p>
+              <p class="review-platform">Text Message Review &#x2022; Richmond, VA</p>
             </div>
-            <div class="social-media-link">
-                <a href='#'><span class='helper'></span><img src='images/yt.png' alt='youtube link'></a>
-            </div>
+          </div>
         </div>
 
-
-        <div class="site-author">
-            <a href='#' class='port-link'>Home</a>
-            <a href='#info-link' class='port-link'>Details</a>
-            <a href='#start-scheduling' class='port-link'>Schedule</a>  
-            <a href="#gallery" class='port-link'>Gallery</a>
-            <a href='#contact' class='port-link'>Contact</a>
-        </div>
-
-        <div class="site-author">
-            <h6 class='footer-details-header'>Contact Info</h6>
-            <ul class='footer-details-ul'>
-                <li class='footer-details-li'>Open 6 Days a Week</li>
-                <li class='footer-details-li'>9:00 AM - 3:00 PM</li>
-                <li class='footer-details-li'><a href='tel: 804-324-6388'>(804) 324 - 6388</a></li>
-                <li class='footer-details-li'><a href='mailto: aTenderTouchDetailing@gmail.com'>aTenderTouchDetailing@gmail.com</a></li>
-            </ul>
-        </div>
-
-        <div class="site-author" id='rights'>
-            <span class='author' id='rights-1'>A Tender Touch Mobile Auto Detailing, All Rights Reserved</span>
-        </div>
-
+      </div>
     </div>
-</footer>
-<script src="scripts/covid.js"></script>
-<script src="scripts/navi.js"></script>
-<script src="scripts/packages.js"></script>
-<script src="scripts/loadImages.js"></script>
-<script src="scripts/client.js"></script>
+  </section>
+
+  <!-- ══════════════ FAQ ══════════════ -->
+  <section id="faq">
+    <div class="faq-inner">
+      <div class="faq-header fade-up">
+        <p class="section-label">Got Questions?</p>
+        <div class="divider" style="margin:0 auto 1rem;"></div>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-desc" style="margin:0 auto;">Everything you need to know before booking. Still have questions? Give us a call!</p>
+      </div>
+
+      <div id="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            What areas do you service?
+            <svg viewBox="0 0 24 24" stroke-width="2" xmlns="http://www.w3.org/2000/svg"><path d="M12 6v6m0 0v6m0-6h6m-6 0H6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">We proudly serve Richmond, VA and all surrounding areas including Henrico,
+Mechanicsville, and Chesterfield. If you're unsure whether we cover your location, give us a call at (804) 324-6388 and we'll let you know!</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            How does mobile detailing work?
+            <svg viewBox="0 0 24 24" stroke-width="2" xmlns="http://www.w3.org/2000/svg"><path d="M12 6v6m0 0v6m0-6h6m-6 0H6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">We come fully equipped to your home, office, or any location of your choice. All we need is a safe, accessible space to work. You don't need to worry about anything — just book, and we'll handle the rest.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            How long does a detail take?
+            <svg viewBox="0 0 24 24" stroke-width="2" xmlns="http://www.w3.org/2000/svg"><path d="M12 6v6m0 0v6m0-6h6m-6 0H6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">Service times vary depending on the package and the condition of your vehicle. A basic wash typically takes 1–1.5 hours. A full detail can take 3–5 hours. We'll give you an estimated time when you book.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            How do I determine my vehicle size category?
+            <svg viewBox="0 0 24 24" stroke-width="2" xmlns="http://www.w3.org/2000/svg"><path d="M12 6v6m0 0v6m0-6h6m-6 0H6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">We categorize vehicles into three groups: <strong>Cars</strong> (sedans, coupes, hatchbacks), <strong>Trucks</strong> (full-size pickups), and <strong>SUVs/Vans</strong> (crossovers, SUVs, minivans). Our online scheduler will guide you through selecting the right category.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            What payment methods do you accept?
+            <svg viewBox="0 0 24 24" stroke-width="2" xmlns="http://www.w3.org/2000/svg"><path d="M12 6v6m0 0v6m0-6h6m-6 0H6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">We accept all major credit/debit cards, cash, and digital payments through Square. Payment is collected after the service is complete. We also have giftcards!</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            What if it rains on my appointment day?
+            <svg viewBox="0 0 24 24" stroke-width="2" xmlns="http://www.w3.org/2000/svg"><path d="M12 6v6m0 0v6m0-6h6m-6 0H6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">If weather conditions prevent us from delivering quality work, we'll contact you as soon as possible to reschedule at no extra charge. Your satisfaction and our quality standards always come first.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Can I add upgrades after booking?
+            <svg viewBox="0 0 24 24" stroke-width="2" xmlns="http://www.w3.org/2000/svg"><path d="M12 6v6m0 0v6m0-6h6m-6 0H6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">Absolutely! Just give us a call at (804) 324-6388 before your appointment and we can add any upgrades to your service. You can also mention it when we arrive and we'll do our best to accommodate.</div></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ FOOTER ══════════════ -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#" class="nav-logo">
+            tendertouch
+            <span>Mobile Detailing · Richmond, VA</span>
+          </a>
+          <p>Professional mobile auto detailing brought directly to your driveway. Serving Richmond, VA and surrounding areas with pride.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#services">Our Services</a></li>
+            <li><a href="#packages">Packages &amp; Pricing</a></li>
+            <li><a href="#testimonials">Reviews</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#booking">Book Now</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:8043246388">(804) 324-6388</a></li>
+            <li><a href="#booking">Online Booking</a></li>
+            <li><a href="#">Richmond, VA & Area</a></li>
+          </ul>
+          <h4 style="margin-top:1.2rem;">Hours</h4>
+          <ul>
+            <li style="color:rgba(255,255,255,0.5);font-size:0.88rem;">Mon–Sat: 9AM – 5PM</li>
+            <li style="color:rgba(255,255,255,0.5);font-size:0.88rem;">Sun: 10AM - 5PM</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 A Tender Touch Mobile Detailing. All rights reserved.</p>
+        <div class="social-links">
+          <a href="#" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zM17.5 6.5h.01" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#" aria-label="Google">
+            <svg viewBox="0 0 24 24" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M21.8 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.5c-.2 1.2-1 2.2-2 2.9v2.4h3.3c1.9-1.8 3-4.4 3-7.1z" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 22c2.7 0 5-1 6.8-2.6l-3.3-2.6c-.9.6-2.1 1-3.5 1-2.7 0-5-1.8-5.8-4.3H2.8v2.5C4.6 19.9 8 22 12 22z" stroke-linecap="round" stroke-linejoin="round"/><path d="M6.2 13.5c-.2-.6-.3-1.3-.3-2s.1-1.4.3-2V7H2.8C2.3 8.1 2 9.5 2 11s.3 2.9.8 4l3.4-1.5z" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 5.7c1.5 0 2.8.5 3.9 1.5l2.9-2.9C17 2.7 14.7 2 12 2 8 2 4.6 4.1 2.8 7.5l3.4 2.5C7 7.5 9.3 5.7 12 5.7z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile Sticky Bar -->
+  <div class="mobile-sticky">
+    <a href="tel:8043246388" class="ms-call">&#128222; Call Now</a>
+    <a href="#booking" class="ms-book">Book Online</a>
+  </div>
+
+  <script>
+    // ─── Navbar scroll effect ───
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // ─── Hero parallax ───
+    const heroBg = document.getElementById('hero-bg');
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      if (scrolled < window.innerHeight * 1.5) {
+        heroBg.style.transform = `translateY(${scrolled * 0.35}px)`;
+      }
+    });
+
+    // ─── Mobile Menu ───
+    function openMobileMenu() {
+      document.getElementById('mobile-menu').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMobileMenu() {
+      document.getElementById('mobile-menu').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // ─── FAQ Accordion ───
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const answer = item.querySelector('.faq-answer');
+      const isOpen = item.classList.contains('open');
+
+      // Close all
+      document.querySelectorAll('.faq-item').forEach(el => {
+        el.classList.remove('open');
+        el.querySelector('.faq-answer').style.maxHeight = '0';
+      });
+
+      // Open clicked if it was closed
+      if (!isOpen) {
+        item.classList.add('open');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+      }
+    }
+
+    // ─── Scroll animations ───
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // ─── Smooth scroll for all anchor links ───
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', e => {
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          const offset = 70;
+          const top = target.getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
 </body>
 </html>
